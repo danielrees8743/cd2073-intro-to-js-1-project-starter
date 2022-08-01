@@ -1,13 +1,36 @@
 /* Create an array named products which you will use to add all of your product object literals that you create in the next step. */
 
-/* Create 3 or more product objects using object literal notation 
+/* Create 3 or more product objects using object literal notation
    Each product should include five properties
-   - name: name of product (string)
+   -name: name of product (string)
    - price: price of product (number)
    - quantity: quantity in cart should start at zero (number)
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
+const products = [
+  {
+    name: 'Cherry',
+    price: 0.75,
+    quantity: 0,
+    productId: 001,
+    image: './images/cherry.jpg',
+  },
+  {
+    name: 'Orange',
+    price: 1.0,
+    quantity: 0,
+    productId: 002,
+    image: './images/orange.jpg',
+  },
+  {
+    name: 'Strawberry',
+    price: 1.1,
+    quantity: 0,
+    productId: 003,
+    image: './images/strawberry.jpg',
+  },
+];
 
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
@@ -54,23 +77,22 @@
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
-
-/* The following is for running unit tests. 
+/* The following is for running unit tests.
    To fully complete this project, it is expected that all tests pass.
    Run the following command in terminal to run tests
    npm run test
 */
 
 module.exports = {
-   products,
-   cart,
-   addProductToCart,
-   increaseQuantity,
-   decreaseQuantity,
-   removeProductFromCart,
-   cartTotal,
-   pay, 
-   emptyCart,
-   /* Uncomment the following line if completing the currency converter bonus */
-   // currency
-}
+  products,
+  cart,
+  addProductToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeProductFromCart,
+  cartTotal,
+  pay,
+  emptyCart,
+  /* Uncomment the following line if completing the currency converter bonus */
+  // currency
+};
