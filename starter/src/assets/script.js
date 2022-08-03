@@ -11,21 +11,21 @@
 const products = [
   {
     name: 'Cherry',
-    price: 0.75,
+    price: 1.0,
     quantity: 0,
     productId: 101,
     image: './images/cherry.jpg',
   },
   {
     name: 'Orange',
-    price: 1.0,
+    price: 0.5,
     quantity: 0,
     productId: 102,
     image: './images/orange.jpg',
   },
   {
     name: 'Strawberry',
-    price: 1.1,
+    price: 1.5,
     quantity: 0,
     productId: 103,
     image: './images/strawberry.jpg',
@@ -46,35 +46,44 @@ const cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 function addProductToCart(productId) {
-  // if (!productId === cart) {
   products.forEach((product) => {
     if (productId === product.productId) {
-      cart.push(product);
       product.quantity++;
-      return products.quantity;
+      if (!cart.includes(product)) {
+        cart.push(product);
+        return cart;
+      }
     }
   });
-  // }
 }
-addProductToCart(101);
-
+// addProductToCart(101);
+// addProductToCart(102);
+// addProductToCart(103);
+// addProductToCart(102);
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
 function increaseQuantity(productId) {
-  cart.find((product) => product === productId);
-  quantity++;
+  cart.find((product) => {
+    product === productId;
+    product.quantity++;
+  });
 }
-increaseQuantity(101);
+
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 function decreaseQuantity(productId) {
-  cart.find((product) => product === productId);
-  quantity--;
+  cart.find((product) => {
+    product === productId;
+    product.quantity--;
+    if (product.quantity === 0) {
+      cart.splice([product], 1);
+    }
+  });
 }
 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
@@ -82,19 +91,49 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
-function removeProductFromCart() {}
+function removeProductFromCart(productId) {
+  cart.find((product) => {
+    if (productId === product.productId) {
+      product.quantity = 0;
+      cart.splice([product], 1);
+    }
+  });
+}
+
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total of all products
   - cartTotal should return the sum of the products in the cart
 */
+let totalCost = 0;
+function cartTotal() {
+  for (let product of cart) {
+    let totalItems = product.quantity * product.price;
 
-/* Create a function called emptyCart that empties the products from the cart */
-function emptyCart() {}
+    totalCost += totalItems;
+    console.log(totalCost);
+  }
+  return totalCost;
+}
+// cartTotal();
+/* Create a function called emptyCart that empties the s from the cart */
+function emptyCart() {
+  cart = [];
+}
 /* Create a function named pay that takes in an amount as an argument
   - pay will return a negative number if there is a remaining balance
   - pay will return a positive number if money should be returned to customer
 */
-function pay() {}
+let balanceToPay = 0;
+function pay(amount) {
+  balanceToPay = +amount;
+  let amountToPay = balanceToPay - cartTotal();
+  if (balanceToPay < cartTotal()) {
+    return amountToPay;
+  } else if (balanceToPay >= cartTotal()) {
+    return balanceToPay - cartTotal();
+  }
+}
+// pay(3);
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
 /* The following is for running unit tests.
