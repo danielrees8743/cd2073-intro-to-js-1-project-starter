@@ -46,7 +46,7 @@ const cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 function addProductToCart(productId) {
-  products.forEach((product) => {
+  products.find((product) => {
     if (productId === product.productId) {
       product.quantity++;
       if (!cart.includes(product)) {
@@ -56,19 +56,14 @@ function addProductToCart(productId) {
     }
   });
 }
-// addProductToCart(101);
-// addProductToCart(102);
-// addProductToCart(103);
-// addProductToCart(102);
+
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
 function increaseQuantity(productId) {
-  cart.find((product) => {
-    product === productId;
-    product.quantity++;
-  });
+  let cartItem = products.find((product) => product.productId === productId);
+  cartItem.quantity++;
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -77,13 +72,11 @@ function increaseQuantity(productId) {
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 function decreaseQuantity(productId) {
-  cart.find((product) => {
-    product === productId;
-    product.quantity--;
-    if (product.quantity === 0) {
-      cart.splice([product], 1);
-    }
-  });
+  let cartItem = cart.find((product) => product.productId === productId);
+  cartItem.quantity--;
+  if (cartItem.quantity === 0) {
+    cart.splice(cart.indexOf(cartItem), 1);
+  }
 }
 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
@@ -92,12 +85,9 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should remove the product from the cart
 */
 function removeProductFromCart(productId) {
-  cart.find((product) => {
-    if (productId === product.productId) {
-      product.quantity = 0;
-      cart.splice([product], 1);
-    }
-  });
+  let cartItem = cart.find((product) => product.productId === productId);
+  cartItem.quantity--;
+  cart.splice(cart.indexOf(cartItem), 1);
 }
 
 /* Create a function named cartTotal that has no parameters
@@ -106,15 +96,14 @@ function removeProductFromCart(productId) {
 */
 let totalCost = 0;
 function cartTotal() {
-  for (let product of cart) {
-    let totalItems = product.quantity * product.price;
+  totalCost = cart.reduce(
+    (acc, product) => acc + product.quantity * product.price,
+    0
+  );
 
-    totalCost += totalItems;
-    console.log(totalCost);
-  }
   return totalCost;
 }
-// cartTotal();
+
 /* Create a function called emptyCart that empties the s from the cart */
 function emptyCart() {
   cart = [];
@@ -125,15 +114,16 @@ function emptyCart() {
 */
 let balanceToPay = 0;
 function pay(amount) {
-  balanceToPay = +amount;
+  balanceToPay = balanceToPay + amount;
   let amountToPay = balanceToPay - cartTotal();
-  if (balanceToPay < cartTotal()) {
+  if (balanceToPay >= cartTotal()) {
+    balanceToPay = 0;
     return amountToPay;
-  } else if (balanceToPay >= cartTotal()) {
-    return balanceToPay - cartTotal();
+  } else {
+    return amountToPay;
   }
 }
-// pay(3);
+
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
 /* The following is for running unit tests.
